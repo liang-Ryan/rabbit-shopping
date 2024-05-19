@@ -1,5 +1,5 @@
 import request from '@/utils/request'
 
-export function getCategoryAPI () {
+export const layoutGetCategoryAPI = () => {
   return request.get('home/category/head')
 }

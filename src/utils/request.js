@@ -1,8 +1,8 @@
 import axios from 'axios'
-		
+
 const instance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
-  timeout: 1000
+  timeout: 5000
 })
 
 // 请求拦截器
@@ -19,7 +19,6 @@ instance.interceptors.response.use(
   (res) => {
     // 响应成功判断
     return res
-
   },
   (err) => {
     // 错误特殊情况（权限不足）
