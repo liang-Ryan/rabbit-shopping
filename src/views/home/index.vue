@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div>home</div>
+  <div style="height: 1000px">home</div>
 </template>
 
 <style scoped></style>

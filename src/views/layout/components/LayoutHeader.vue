@@ -1,23 +1,12 @@
 <script setup>
 // =============================
-// 导入
+// 商品分类
 // =============================
 
-import { ref } from 'vue'
-import { layoutGetCategoryAPI } from '@/api/layout'
+import { useLayoutStore } from '@/stores'
+const layoutStore = useLayoutStore()
 
 // =============================
-// header分类
-// =============================
-
-const categoryList = ref([])
-const getList = async () => {
-  const {
-    data: { result }
-  } = await layoutGetCategoryAPI()
-  categoryList.value = result
-}
-getList()
 </script>
 
 <template>
@@ -30,7 +19,7 @@ getList()
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li v-for="item in categoryList" :key="item.id">
+        <li v-for="item in layoutStore.categoryList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
