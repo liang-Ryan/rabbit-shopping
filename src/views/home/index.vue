@@ -17,4 +17,8 @@ import homeProduct from './components/homeProduct.vue'
   <homeProduct></homeProduct>
 </template>
 
-<style scoped></style>
+<style scoped>
+.home-content {
+  position: relative;
+}
+</style>

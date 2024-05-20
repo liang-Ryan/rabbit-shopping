@@ -8,6 +8,7 @@ const layoutStore = useLayoutStore()
 
 // =============================
 </script>
+
 <template>
   <div class="home-category">
     <ul class="menu">

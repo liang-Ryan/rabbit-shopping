@@ -6,4 +6,6 @@ export default pinia
 // pinia-plugin-persistedstate插件
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 pinia.use(piniaPluginPersistedstate)
+
 export * from './modules/layout.js'
+export * from './modules/home.js'
