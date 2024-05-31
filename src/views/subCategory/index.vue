@@ -1,4 +1,19 @@
-<script setup></script>
+<script setup>
+// 通用
+import { useRoute } from 'vue-router'
+import { useCategoryStore } from '@/stores'
+
+// =============================
+// 二级分类地址
+// =============================
+
+const route = useRoute()
+
+const categoryStore = useCategoryStore()
+categoryStore.getSubCategoryList(route.params.id)
+
+// =============================
+</script>
 
 <template>
   <div class="container">
@@ -6,8 +21,13 @@
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' }">居家 </el-breadcrumb-item>
-        <el-breadcrumb-item>居家生活用品</el-breadcrumb-item>
+        <el-breadcrumb-item
+          :to="{ path: `/category/${categoryStore.subCategoryList.parentId}` }"
+          >{{ categoryStore.subCategoryList.parentName }}
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>
+          {{ categoryStore.subCategoryList.name }}
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="sub-container">

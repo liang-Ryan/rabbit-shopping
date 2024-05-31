@@ -1,9 +1,8 @@
 <script setup>
 // 通用
 import { useRoute } from 'vue-router'
-import { useCategoryStore } from '@/stores'
-
 import { onBeforeRouteUpdate } from 'vue-router' // 监听路由变化
+import { useCategoryStore } from '@/stores'
 
 // 组件
 import goodsItem from '../home/components/goodsItem.vue'
@@ -26,8 +25,6 @@ onBeforeRouteUpdate((to) => {
   // to为目标路由对象
   categoryStore.getCategoryList(to.params.id)
 })
-
-// =============================
 </script>
 
 <template>

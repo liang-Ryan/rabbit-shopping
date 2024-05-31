@@ -8,3 +8,12 @@ export const categoryGetListAPI = (id) => {
     }
   })
 }
+
+// 获取二级分类导航地址
+export const categoryGetFilterAPI = (id) => {
+  return request.get('/category/sub/filter', {
+    params: {
+      id
+    }
+  })
+}
