@@ -47,6 +47,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     } = await categoryGetFilterAPI(id)
     subCategoryList.value = result
   }
+
   // =============================
   // 二级分类商品数据
   // =============================
@@ -59,6 +60,25 @@ export const useCategoryStore = defineStore('categoryStore', () => {
       }
     } = await categoryPostGoodsTemporaryAPI(reqData)
     goodsList.value = items
+  }
+
+  // =============================
+  // 加载更多
+  // =============================
+
+  const loadMore = async (reqData) => {
+    const {
+      data: {
+        result: { items }
+      }
+    } = await categoryPostGoodsTemporaryAPI(reqData)
+    if (items) {
+      goodsList.value = [...goodsList.value, ...items]
+      return false
+    } else {
+      // 已加载完所有数据
+      return true
+    }
   }
 
   // =============================
@@ -75,6 +95,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     getSubCategoryList,
     // 二级分类商品数据
     goodsList,
-    getGoodsTemporary
+    getGoodsTemporary,
+    loadMore
   }
 })

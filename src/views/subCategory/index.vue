@@ -38,6 +38,16 @@ const tabChange = () => {
 }
 
 // =============================
+// 加载更多
+// =============================
+
+const scrollDisabled = ref(false)
+const load = async () => {
+  reqData.value.page++
+  scrollDisabled.value = await categoryStore.loadMore(reqData)
+}
+
+// =============================
 </script>
 
 <template>
@@ -61,7 +71,11 @@ const tabChange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div
+        class="body"
+        v-infinite-scroll="load"
+        :infinite-scroll-disabled="scrollDisabled"
+      >
         <!-- 商品列表-->
         <goodsItem
           v-for="item in categoryStore.goodsList"
