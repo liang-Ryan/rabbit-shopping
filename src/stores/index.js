@@ -10,3 +10,4 @@ pinia.use(piniaPluginPersistedstate)
 export * from './modules/layout.js'
 export * from './modules/home.js'
 export * from './modules/category.js'
+export * from './modules/detail.js'
