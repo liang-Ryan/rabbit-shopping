@@ -63,7 +63,7 @@ onBeforeRouteUpdate((to) => {
             v-for="item in categoryStore.categoryList.children"
             :key="item.id"
           >
-            <RouterLink to="/">
+            <RouterLink :to="`/category/sub/${item.id}`">
               <img :src="item.picture" />
               <p>{{ item.name }}</p>
             </RouterLink>
