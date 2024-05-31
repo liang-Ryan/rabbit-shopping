@@ -14,3 +14,8 @@ export const homeGetHotAPI = () => {
 export const homeGetNewAPI = () => {
   return request.get('/home/new')
 }
+
+// 商品
+export const homeGetGoodsAPI = () => {
+  return request.get('/home/goods')
+}

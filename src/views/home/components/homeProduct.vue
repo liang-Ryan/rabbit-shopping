@@ -1,7 +1,135 @@
-<script setup></script>
+<script setup>
+// 通用
+import { ref } from 'vue'
+
+// 组件
+import homePanel from './homePanel.vue'
+import goodsItem from './goodsItem.vue'
+
+// API
+import { homeGetGoodsAPI } from '@/api/home'
+
+// =============================
+// 数据
+// =============================
+
+const goodsList = ref([])
+const getGoodsList = async () => {
+  const {
+    data: { result }
+  } = await homeGetGoodsAPI()
+  goodsList.value = result
+}
+getGoodsList()
+</script>
 
 <template>
-  <div>homeProduct</div>
+  <div class="home-product">
+    <homePanel :title="item.name" v-for="item in goodsList" :key="item.id">
+      <div class="box">
+        <RouterLink class="cover" to="/">
+          <img v-img-lazy="item.picture" />
+          <strong class="label">
+            <span>{{ item.name }}馆</span>
+            <span>{{ item.saleInfo }}</span>
+          </strong>
+        </RouterLink>
+        <ul class="goods-list">
+          <li v-for="goods in item.goods" :key="goods.id">
+            <goodsItem :goods="goods"></goodsItem>
+          </li>
+        </ul>
+      </div>
+    </homePanel>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.home-product {
+  background: #fff;
+  margin-top: 20px;
+  .sub {
+    margin-bottom: 2px;
+
+    a {
+      padding: 2px 12px;
+      font-size: 16px;
+      border-radius: 4px;
+
+      &:hover {
+        background: $xtxColor;
+        color: #fff;
+      }
+
+      &:last-child {
+        margin-right: 80px;
+      }
+    }
+  }
+
+  .box {
+    display: flex;
+
+    .cover {
+      width: 240px;
+      height: 610px;
+      margin-right: 10px;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .label {
+        width: 188px;
+        height: 66px;
+        display: flex;
+        font-size: 18px;
+        color: #fff;
+        line-height: 66px;
+        font-weight: normal;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+
+        span {
+          text-align: center;
+
+          &:first-child {
+            width: 76px;
+            background: rgba(0, 0, 0, 0.9);
+          }
+
+          &:last-child {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.7);
+          }
+        }
+      }
+    }
+
+    .goods-list {
+      width: 990px;
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        width: 240px;
+        height: 300px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        &:nth-last-child(-n + 4) {
+          margin-bottom: 0;
+        }
+
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+</style>
