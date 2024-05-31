@@ -52,7 +52,7 @@ const load = async () => {
 
 <template>
   <div class="container">
-    <!-- 二级分类导航地址 -->
+    <!-- 导航地址 -->
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>

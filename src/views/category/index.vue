@@ -30,7 +30,7 @@ onBeforeRouteUpdate((to) => {
 <template>
   <div class="top-category">
     <div class="container m-top-20">
-      <!-- 二级分类导航地址 -->
+      <!-- 导航地址 -->
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>

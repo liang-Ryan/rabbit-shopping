@@ -17,7 +17,7 @@ homeStore.getNewGoodsList()
   <homePanel title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
     <ul class="goods-list">
       <li v-for="item in homeStore.newGoodsList" :key="item.id">
-        <RouterLink to="/">
+        <RouterLink :to="`/detail/${item.id}`">
           <img v-img-lazy="item.picture" alt="" />
           <p class="name">{{ item.name }}</p>
           <p class="price">&yen;{{ item.price }}</p>
