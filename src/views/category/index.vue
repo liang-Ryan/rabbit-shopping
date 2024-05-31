@@ -3,8 +3,17 @@
 import { useRoute } from 'vue-router'
 import { useCategoryStore } from '@/stores'
 
+import { onBeforeRouteUpdate } from 'vue-router' // 监听路由变化
+
 // 组件
 import goodsItem from '../home/components/goodsItem.vue'
+
+// =============================
+// 轮播图数据
+// =============================
+
+const categoryStore = useCategoryStore()
+categoryStore.getCategoryBannerList()
 
 // =============================
 // 二级分类数据
@@ -12,14 +21,11 @@ import goodsItem from '../home/components/goodsItem.vue'
 
 const route = useRoute()
 
-const categoryStore = useCategoryStore()
 categoryStore.getCategoryList(route.params.id)
-
-// =============================
-// 轮播图数据
-// =============================
-
-categoryStore.getCategoryBannerList()
+onBeforeRouteUpdate((to) => {
+  // to为目标路由对象
+  categoryStore.getCategoryList(to.params.id)
+})
 
 // =============================
 </script>

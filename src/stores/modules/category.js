@@ -7,18 +7,6 @@ import { homeGetBannerAPI } from '@/api/home'
 
 export const useCategoryStore = defineStore('categoryStore', () => {
   // =============================
-  // 二级分类数据
-  // =============================
-
-  const categoryList = ref({})
-  const getCategoryList = async (id) => {
-    const {
-      data: { result }
-    } = await categoryGetListAPI(id)
-    categoryList.value = result
-  }
-
-  // =============================
   // 轮播图数据
   // =============================
 
@@ -33,13 +21,25 @@ export const useCategoryStore = defineStore('categoryStore', () => {
   }
 
   // =============================
+  // 二级分类数据
+  // =============================
+
+  const categoryList = ref({})
+  const getCategoryList = async (id) => {
+    const {
+      data: { result }
+    } = await categoryGetListAPI(id)
+    categoryList.value = result
+  }
+
+  // =============================
 
   return {
-    // 二级分类数据
-    categoryList,
-    getCategoryList,
     // 轮播图数据
     categoryBannerList,
-    getCategoryBannerList
+    getCategoryBannerList,
+    // 二级分类数据
+    categoryList,
+    getCategoryList
   }
 })
