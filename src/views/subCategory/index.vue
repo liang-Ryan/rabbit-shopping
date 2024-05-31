@@ -1,7 +1,11 @@
 <script setup>
 // 通用
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCategoryStore } from '@/stores'
+
+// 组件
+import goodsItem from '../home/components/goodsItem.vue'
 
 // =============================
 // 二级分类地址
@@ -11,6 +15,18 @@ const route = useRoute()
 
 const categoryStore = useCategoryStore()
 categoryStore.getSubCategoryList(route.params.id)
+
+// =============================
+// 二级分类地址
+// =============================
+
+const reqData = ref({
+  categoryId: route.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: 'publishTime'
+})
+categoryStore.getGoodsTemporary(reqData)
 
 // =============================
 </script>
@@ -38,6 +54,11 @@ categoryStore.getSubCategoryList(route.params.id)
       </el-tabs>
       <div class="body">
         <!-- 商品列表-->
+        <goodsItem
+          v-for="item in categoryStore.goodsList"
+          :key="item.id"
+          :goods="item"
+        ></goodsItem>
       </div>
     </div>
   </div>

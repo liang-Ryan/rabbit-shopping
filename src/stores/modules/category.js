@@ -3,7 +3,11 @@ import { defineStore } from 'pinia'
 
 // API
 import { homeGetBannerAPI } from '@/api/home'
-import { categoryGetFilterAPI, categoryGetListAPI } from '@/api/category'
+import {
+  categoryGetFilterAPI,
+  categoryGetListAPI,
+  categoryPostGoodsTemporaryAPI
+} from '@/api/category'
 
 export const useCategoryStore = defineStore('categoryStore', () => {
   // =============================
@@ -21,7 +25,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
   }
 
   // =============================
-  // 二级分类数据
+  // 二级分类列表数据
   // =============================
 
   const categoryList = ref({})
@@ -43,6 +47,19 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     } = await categoryGetFilterAPI(id)
     subCategoryList.value = result
   }
+  // =============================
+  // 二级分类商品数据
+  // =============================
+
+  const goodsList = ref([])
+  const getGoodsTemporary = async (reqData) => {
+    const {
+      data: {
+        result: { items }
+      }
+    } = await categoryPostGoodsTemporaryAPI(reqData)
+    goodsList.value = items
+  }
 
   // =============================
 
@@ -50,11 +67,14 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     // 轮播图数据
     categoryBannerList,
     getCategoryBannerList,
-    // 二级分类数据
+    // 二级分类列表数据
     categoryList,
     getCategoryList,
     // 二级分类地址
     subCategoryList,
-    getSubCategoryList
+    getSubCategoryList,
+    // 二级分类商品数据
+    goodsList,
+    getGoodsTemporary
   }
 })

@@ -15,7 +15,7 @@ const categoryStore = useCategoryStore()
 categoryStore.getCategoryBannerList()
 
 // =============================
-// 二级分类数据
+// 二级分类列表数据
 // =============================
 
 const route = useRoute()
