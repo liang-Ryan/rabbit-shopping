@@ -3,6 +3,9 @@
 import { useRoute } from 'vue-router'
 import { useCategoryStore } from '@/stores'
 
+// 组件
+import goodsItem from '../home/components/goodsItem.vue'
+
 // =============================
 // 二级分类数据
 // =============================
@@ -44,6 +47,39 @@ categoryStore.getCategoryBannerList()
             <img :src="item.imgUrl" alt="" />
           </el-carousel-item>
         </el-carousel>
+      </div>
+
+      <!-- 全部分类 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li
+            v-for="item in categoryStore.categoryList.children"
+            :key="item.id"
+          >
+            <RouterLink to="/">
+              <img :src="item.picture" />
+              <p>{{ item.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <!-- 商品内容 -->
+      <div
+        class="ref-goods"
+        v-for="item in categoryStore.categoryList.children"
+        :key="item.id"
+      >
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <goodsItem
+            v-for="goods in item.goods"
+            :goods="goods"
+            :key="goods.id"
+          />
+        </div>
       </div>
     </div>
   </div>
