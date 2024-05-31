@@ -22,7 +22,13 @@ const router = createRouter({
         }
       ]
     }
-  ]
+  ],
+  scrollBehavior() {
+    // 切换路由时，滚动条移至顶部
+    return {
+      top: 0
+    }
+  }
 })
 
 export default router
