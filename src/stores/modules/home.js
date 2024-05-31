@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { layoutGetBannerAPI } from '@/api/home'
+import { homeGetBannerAPI } from '@/api/home'
 
 export const useHometStore = defineStore('homeStore', () => {
   // =============================
@@ -11,7 +11,7 @@ export const useHometStore = defineStore('homeStore', () => {
   const getBannerList = async () => {
     const {
       data: { result }
-    } = await layoutGetBannerAPI()
+    } = await homeGetBannerAPI()
     bannerList.value = result
   }
 
