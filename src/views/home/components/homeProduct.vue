@@ -1,31 +1,26 @@
 <script setup>
-// 通用
-import { ref } from 'vue'
-
 // 组件
 import homePanel from './homePanel.vue'
 import goodsItem from './goodsItem.vue'
 
-// API
-import { homeGetGoodsAPI } from '@/api/home'
-
 // =============================
-// 数据
+// 商品列表
 // =============================
 
-const goodsList = ref([])
-const getGoodsList = async () => {
-  const {
-    data: { result }
-  } = await homeGetGoodsAPI()
-  goodsList.value = result
-}
-getGoodsList()
+import { useHometStore } from '@/stores'
+const homeStore = useHometStore()
+homeStore.getGoodsList()
+
+// =============================
 </script>
 
 <template>
   <div class="home-product">
-    <homePanel :title="item.name" v-for="item in goodsList" :key="item.id">
+    <homePanel
+      :title="item.name"
+      v-for="item in homeStore.goodsList"
+      :key="item.id"
+    >
       <div class="box">
         <RouterLink class="cover" to="/">
           <img v-img-lazy="item.picture" />

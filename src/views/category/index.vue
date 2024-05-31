@@ -1,10 +1,7 @@
 <script setup>
 // 通用
-import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-
-// API
-import { categoryGetListAPI } from '@/api/category'
+import { useCategoryStore } from '@/stores'
 
 // =============================
 // 二级分类数据
@@ -12,25 +9,41 @@ import { categoryGetListAPI } from '@/api/category'
 
 const route = useRoute()
 
-const categoryList = ref({})
-const getCategoryList = async () => {
-  const {
-    data: { result }
-  } = await categoryGetListAPI(route.params.id)
-  categoryList.value = result
-}
-getCategoryList()
+const categoryStore = useCategoryStore()
+categoryStore.getCategoryList(route.params.id)
+
+// =============================
+// 轮播图数据
+// =============================
+
+categoryStore.getCategoryBannerList()
+
+// =============================
 </script>
 
 <template>
   <div class="top-category">
     <div class="container m-top-20">
+      <!-- 二级分类导航地址 -->
       <div class="bread-container">
-        <!-- 二级分类导航地址 -->
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ categoryList.name }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{
+            categoryStore.categoryList.name
+          }}</el-breadcrumb-item>
         </el-breadcrumb>
+      </div>
+
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item
+            v-for="item in categoryStore.categoryBannerList"
+            :key="item.id"
+          >
+            <img :src="item.imgUrl" alt="" />
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
   </div>
@@ -111,6 +124,17 @@ getCategoryList()
 
   .bread-container {
     padding: 25px 0;
+  }
+}
+
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    height: 500px;
   }
 }
 </style>

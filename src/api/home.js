@@ -1,8 +1,13 @@
 import request from '@/utils/request'
 
 // 轮播图数据
-export const homeGetBannerAPI = () => {
-  return request.get('/home/banner')
+export const homeGetBannerAPI = (params = {}) => {
+  const { distributionSite = '1' } = params
+  return request.get('/home/banner', {
+    params: {
+      distributionSite
+    }
+  })
 }
 
 // 人气推荐

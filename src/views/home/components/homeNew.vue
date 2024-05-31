@@ -1,31 +1,22 @@
 <script setup>
-// 通用
-import { ref } from 'vue'
-
 // 组件
 import homePanel from './homePanel.vue'
 
-// API
-import { homeGetNewAPI } from '@/api/home'
-
 // =============================
-// 新鲜好物数据
+// 人气商品数据
 // =============================
 
-const newGoodsList = ref([])
-const getNewGoodsList = async () => {
-  const {
-    data: { result }
-  } = await homeGetNewAPI()
-  newGoodsList.value = result
-}
-getNewGoodsList()
+import { useHometStore } from '@/stores'
+const homeStore = useHometStore()
+homeStore.getNewGoodsList()
+
+// =============================
 </script>
 
 <template>
   <homePanel title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
     <ul class="goods-list">
-      <li v-for="item in newGoodsList" :key="item.id">
+      <li v-for="item in homeStore.newGoodsList" :key="item.id">
         <RouterLink to="/">
           <img v-img-lazy="item.picture" alt="" />
           <p class="name">{{ item.name }}</p>
