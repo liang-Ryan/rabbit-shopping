@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router'
 
 // 组件
 import hotGoods from './components/hotGoods.vue'
+import imageView from './components/imageView.vue'
 
 // =============================
 // 获取商品详情
@@ -48,6 +49,7 @@ const goods = computed(() => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
+              <imageView :imageList="goods.mainPictures"></imageView>
 
               <!-- 统计数量 -->
               <ul class="goods-sales">
