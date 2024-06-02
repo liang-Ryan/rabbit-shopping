@@ -1,4 +1,8 @@
+// 通用
 import axios from 'axios'
+import { useUserStore } from '@/stores'
+
+// 组件
 import { ElMessage } from 'element-plus'
 
 const instance = axios.create({
@@ -10,6 +14,11 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     // 请求携带token
+    const userStore = useUserStore()
+    const token = userStore.userInfo.token
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (err) => Promise.reject(err)

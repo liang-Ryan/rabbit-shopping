@@ -1,12 +1,38 @@
-<script setup></script>
+<script setup>
+// 通用
+import { useUserStore } from '@/stores'
+import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+
+// =============================
+// 登录
+// =============================
+
+const userStore = useUserStore()
+
+const route = useRoute()
+const router = useRouter()
+
+const toLogin = () => {
+  router.push({
+    path: '/login',
+    query: {
+      backUrl: route.fullPath // 传递参数
+    }
+  })
+}
+</script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="false">
+        <template v-if="userStore.userInfo.token">
           <li>
-            <a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a>
+            <a href="javascript:;"
+              ><i class="iconfont icon-user"></i
+              >{{ userStore.userInfo.account }}</a
+            >
           </li>
           <li>
             <el-popconfirm
@@ -24,7 +50,7 @@
         </template>
         <template v-else>
           <li>
-            <a href="javascript:;" @click="$router.push('/login')">请先登录</a>
+            <a href="javascript:;" @click="toLogin">请先登录</a>
           </li>
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>

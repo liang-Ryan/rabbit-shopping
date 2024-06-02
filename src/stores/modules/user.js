@@ -1,35 +1,46 @@
 // 通用
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { userPostLoginAPI } from '@/api/user'
+
+// 组件
 import { ElMessage } from 'element-plus'
 
 // API
+import { userPostLoginAPI } from '@/api/user'
 
-export const useUserStore = defineStore('userStore', () => {
-  // =============================
-  // 登录数据
-  // =============================
+export const useUserStore = defineStore(
+  'userStore',
+  () => {
+    // =============================
+    // 用户信息
+    // =============================
 
-  const userInfo = ref({})
-  // const token = ref()
+    const userInfo = ref({})
 
-  // =============================
-  // 登录请求
-  // =============================
-
-  const userLogin = async (form) => {
-    const {
-      data: { result }
-    } = await userPostLoginAPI(form)
-    userInfo.value = result
-    ElMessage.success('登录成功')
-  }
-
-  return {
-    // 登录数据
-    userInfo,
+    // =============================
     // 登录请求
-    userLogin
+    // =============================
+
+    const getUserInfo = async (form) => {
+      const {
+        data: { result }
+      } = await userPostLoginAPI(form)
+      userInfo.value = result
+      ElMessage.success('登录成功')
+    }
+
+    return {
+      // 登录数据
+      userInfo,
+      // 登录请求
+      getUserInfo
+    }
+  },
+  {
+    persist: {
+      // 开启pinia持久化
+      key: 'rabbitShopping-userInfo',
+      path: ['userInfo']
+    }
   }
-})
+)
