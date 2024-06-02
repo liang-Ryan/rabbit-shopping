@@ -1,7 +1,7 @@
 <script setup>
 // 组件
 import homePanel from './homePanel.vue'
-import goodsItem from './goodsItem.vue'
+import goodsItem from '@/components/goodsItem.vue'
 
 // =============================
 // 商品列表

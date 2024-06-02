@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 import { useCategoryStore } from '@/stores'
 
 // 组件
-import goodsItem from '../home/components/goodsItem.vue'
+import goodsItem from '@/components/goodsItem.vue'
 
 // =============================
 // 二级分类地址
