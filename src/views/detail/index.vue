@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router'
 // 组件
 import hotGoods from './components/hotGoods.vue'
 import imageView from './components/imageView.vue'
+import XtxSku from './components/XtxSku/index.vue'
 
 // =============================
 // 获取商品详情
@@ -99,7 +100,8 @@ const goods = computed(() => {
                   </dd>
                 </dl>
               </div>
-              <!-- sku组件 -->
+              <!-- sku -->
+              <XtxSku :goods="goods"></XtxSku>
 
               <!-- 数据组件 -->
 
