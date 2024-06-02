@@ -4,9 +4,6 @@ import { useRoute } from 'vue-router'
 import { onBeforeRouteUpdate } from 'vue-router' // 监听路由变化
 import { useCategoryStore } from '@/stores'
 
-// 组件
-import goodsItem from '@/components/goodsItem.vue'
-
 // =============================
 // 轮播图数据
 // =============================
