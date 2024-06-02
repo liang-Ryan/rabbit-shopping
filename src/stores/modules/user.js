@@ -1,6 +1,7 @@
 // 通用
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 
 // 组件
 import { ElMessage } from 'element-plus'
@@ -29,11 +30,25 @@ export const useUserStore = defineStore(
       ElMessage.success('登录成功')
     }
 
+    // =============================
+    // 退出登录
+    // =============================
+
+    const router = useRouter()
+
+    const logout = () => {
+      userInfo.value = {}
+      router.push('/login')
+      ElMessage.success('退出成功')
+    }
+    // =============================
     return {
       // 登录数据
       userInfo,
       // 登录请求
-      getUserInfo
+      getUserInfo,
+      // 退出登录
+      logout
     }
   },
   {

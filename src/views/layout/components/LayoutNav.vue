@@ -38,6 +38,7 @@ const toLogin = () => {
             <el-popconfirm
               title="确认退出吗?"
               confirm-button-text="确认"
+              @confirm="userStore.logout"
               cancel-button-text="取消"
             >
               <template #reference>
