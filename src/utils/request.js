@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 const instance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -23,10 +24,11 @@ instance.interceptors.response.use(
   (err) => {
     // 错误特殊情况（权限不足）
     if (err.response?.status === 401) {
-      console.log('401 权限不足')
+      //
     }
 
     // 响应错误默认处理
+    ElMessage.error(err.response.data.message)
     return Promise.reject(err)
   }
 )
