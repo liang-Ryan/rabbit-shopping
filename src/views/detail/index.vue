@@ -3,6 +3,9 @@ import { computed } from 'vue'
 import { useDetailStore } from '@/stores'
 import { useRoute } from 'vue-router'
 
+// 组件
+import hotGoods from './components/hotGoods.vue'
+
 // =============================
 // 获取商品详情
 // =============================
@@ -65,7 +68,7 @@ const goods = computed(() => {
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{ goods.brand.name }}</p>
+                  <p>{{ goods.brand?.name }}</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
@@ -115,7 +118,7 @@ const goods = computed(() => {
                   <!-- 文字详情 -->
                   <ul class="attrs">
                     <li
-                      v-for="item in goods.details.properties"
+                      v-for="item in goods.details?.properties"
                       :key="item.name"
                     >
                       <span class="dt">{{ item.name }}</span>
@@ -125,7 +128,7 @@ const goods = computed(() => {
 
                   <!-- 图片详情 -->
                   <img
-                    v-for="image in goods.details.pictures"
+                    v-for="image in goods.details?.pictures"
                     :src="image"
                     alt=""
                     :key="image"
@@ -133,8 +136,22 @@ const goods = computed(() => {
                 </div>
               </div>
             </div>
-            <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside"></div>
+
+            <!-- 热榜+专题推荐 -->
+            <div class="goods-aside">
+              <!-- 24小时热榜 -->
+              <hotGoods
+                :id="route.params.id"
+                type="1"
+                title="24小时热榜"
+              ></hotGoods>
+              <!-- 周热榜 -->
+              <hotGoods
+                :id="route.params.id"
+                type="2"
+                title="周热榜"
+              ></hotGoods>
+            </div>
           </div>
         </div>
       </div>

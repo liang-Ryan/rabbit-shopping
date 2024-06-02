@@ -17,6 +17,7 @@ export const useDetailStore = defineStore('detailStore', () => {
     goodsDetail.value = result
   }
 
+  // =============================
   return {
     // 获取商品详情
     goodsDetail,
