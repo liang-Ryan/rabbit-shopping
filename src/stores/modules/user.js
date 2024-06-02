@@ -53,7 +53,6 @@ export const useUserStore = defineStore(
   },
   {
     persist: {
-      // 开启pinia持久化
       key: 'rabbitShopping-userInfo',
       path: ['userInfo']
     }

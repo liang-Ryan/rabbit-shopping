@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useDetailStore } from '@/stores'
 import { useRoute } from 'vue-router'
 
@@ -7,6 +7,17 @@ import { useRoute } from 'vue-router'
 import hotGoods from './components/hotGoods.vue'
 import imageView from './components/imageView.vue'
 import XtxSku from './components/XtxSku/index.vue'
+import { ElMessage } from 'element-plus'
+import { useCartStore } from '@/stores/modules/cart'
+
+// =============================
+// computed
+// =============================
+
+const detailStore = useDetailStore()
+const goods = computed(() => {
+  return detailStore.goodsDetail
+})
 
 // =============================
 // 获取商品详情
@@ -14,11 +25,45 @@ import XtxSku from './components/XtxSku/index.vue'
 
 const route = useRoute()
 
-const detailStore = useDetailStore()
 detailStore.getGoodsDetail(route.params.id)
-const goods = computed(() => {
-  return detailStore.goodsDetail
-})
+
+// =============================
+// 购买信息
+// =============================
+
+// 选择sku
+let skuSelected = {}
+const skuChange = (sku) => {
+  skuSelected = sku
+}
+
+// 购买数量
+const count = ref(1)
+
+const countChange = (count) => {}
+
+// =============================
+// 加入购物车
+// =============================
+
+const cartStore = useCartStore()
+
+const addToCart = () => {
+  if (skuSelected.skuId) {
+    cartStore.addCart({
+      id: goods.value.id,
+      name: goods.value.name,
+      picture: goods.value.mainPictures[0],
+      price: goods.value.price,
+      count: count.value,
+      skuId: skuSelected.skuId,
+      attrsText: skuSelected.specsText,
+      selected: true
+    })
+  } else {
+    ElMessage.warning('请先选择商品规格')
+  }
+}
 </script>
 
 <template>
@@ -101,13 +146,16 @@ const goods = computed(() => {
                 </dl>
               </div>
               <!-- sku -->
-              <XtxSku :goods="goods"></XtxSku>
+              <XtxSku :goods="goods" @change="skuChange"></XtxSku>
 
               <!-- 数据组件 -->
+              <el-input-number v-model="count" @change="countChange" />
 
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn"> 加入购物车 </el-button>
+                <el-button size="large" class="btn" @click="addToCart">
+                  加入购物车
+                </el-button>
               </div>
             </div>
           </div>
