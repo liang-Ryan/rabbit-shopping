@@ -1,9 +1,15 @@
 // 通用
 import axios from 'axios'
 import { useUserStore } from '@/stores'
+// import  from 'vue-router'
+import router from '@/router'
 
 // 组件
 import { ElMessage } from 'element-plus'
+
+// =============================
+// 拦截器
+// =============================
 
 const instance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -33,7 +39,16 @@ instance.interceptors.response.use(
   (err) => {
     // 错误特殊情况（权限不足）
     if (err.response?.status === 401) {
-      //
+      const userStore = useUserStore()
+      userStore.userInfo = {}
+
+      const route = router.currentRoute
+      router.push({
+        path: '/login',
+        query: {
+          backUrl: route.value.fullPath
+        }
+      })
     }
 
     // 响应错误默认处理
