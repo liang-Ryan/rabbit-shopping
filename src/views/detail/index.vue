@@ -149,7 +149,7 @@ const addToCart = () => {
               <XtxSku :goods="goods" @change="skuChange"></XtxSku>
 
               <!-- 数据组件 -->
-              <el-input-number v-model="count" @change="countChange" />
+              <el-input-number v-model="count" :min="1" @change="countChange" />
 
               <!-- 按钮组件 -->
               <div>
