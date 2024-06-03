@@ -40,13 +40,27 @@ export const useCartStore = defineStore(
     }
 
     // =============================
+    // 从购物车删除
+    // =============================
+
+    const delCart = (skuId) => {
+      const index = cartList.value.findIndex((item) => skuId === item.skuId)
+
+      if (toString(index)) {
+        cartList.value.splice(index, 1)
+      }
+    }
+
+    // =============================
     return {
       // 购物车数据
       cartList,
       cartGoodsTotalCount,
       cartGoodsTotalPrice,
       // 添加到购物车
-      addCart
+      addCart,
+      // 从购物车删除
+      delCart
     }
   },
   {
