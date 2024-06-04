@@ -1,9 +1,11 @@
 // 通用
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 
 // store
 import { useUserStore } from './user'
+import { useOrderStore } from './order'
 
 // 组件
 import { ElMessage } from 'element-plus'
@@ -13,7 +15,8 @@ import {
   cartDeleteCartAPI,
   cartGetCartListAPI,
   cartPostAddCartAPI,
-  cartPostMergeAPI
+  cartPostMergeAPI,
+  cartPutSelectedAPI
 } from '@/api/cart'
 
 export const useCartStore = defineStore(
@@ -158,6 +161,40 @@ export const useCartStore = defineStore(
     }
 
     // =============================
+    // 修改购物车选中信息（选择订单商品）
+    // =============================
+
+    const router = useRouter()
+    const orderStore = useOrderStore()
+
+    const changeCartList = async () => {
+      const selectedList = cartList.value
+        .filter((item) => {
+          return item.selected === true
+        })
+        .map((item) => {
+          return item.skuId
+        })
+      if (selectedList.length > 0) {
+        await cartPutSelectedAPI(true, selectedList)
+      }
+
+      const notSelectedList = cartList.value
+        .filter((item) => {
+          return item.selected === false
+        })
+        .map((item) => {
+          return item.skuId
+        })
+      if (notSelectedList.length > 0) {
+        await cartPutSelectedAPI(false, notSelectedList)
+      }
+
+      orderStore.getOrderInfo()
+      router.push('/order')
+    }
+
+    // =============================
 
     return {
       // 购物车数据
@@ -178,7 +215,9 @@ export const useCartStore = defineStore(
       // 从购物车删除
       delCart,
       // 合并购物车
-      mergeCartList
+      mergeCartList,
+      // 修改购物车选中信息（选择订单商品）
+      changeCartList
     }
   },
   {

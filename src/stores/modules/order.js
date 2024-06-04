@@ -9,6 +9,7 @@ import { useCartStore } from './cart'
 import { orderGetOrderInfoAPI, orderPostOrderAPI } from '@/api/order'
 
 export const useOrderStore = defineStore('orderStore', () => {
+  const cartStore = useCartStore()
   const router = useRouter()
 
   // =============================
@@ -26,14 +27,11 @@ export const useOrderStore = defineStore('orderStore', () => {
     address.value = orderInfo.value.userAddresses.find((item) => {
       return item.isDefault === 0
     })
-    router.push('/order')
   }
 
   // =============================
   // 提交订单
   // =============================
-
-  const cartStore = useCartStore()
 
   const submitOrder = async () => {
     const {

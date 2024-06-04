@@ -26,3 +26,11 @@ export const cartDeleteCartAPI = (array) => {
 export const cartPostMergeAPI = (array) => {
   return request.post('/member/cart/merge', array)
 }
+
+// 修改购物车选中信息（选择订单商品）
+export const cartPutSelectedAPI = (selected, ids) => {
+  return request.put('/member/cart/selected', {
+    selected,
+    ids
+  })
+}

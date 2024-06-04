@@ -1,19 +1,26 @@
 <script setup>
 // 通用
-import { useOrderStore } from '@/stores'
+// import { useOrderStore } from '@/stores'
 import { useCartStore } from '@/stores/modules/cart'
+// import { useRouter } from 'vue-router'
 
 // =============================
 // 购物车列表
 // =============================
 
 const cartStore = useCartStore()
+cartStore.getCartList()
 
 // =============================
 // 提交订单
 // =============================
 
-const orderStore = useOrderStore()
+// const orderStore = useOrderStore()
+// const router = useRouter()
+
+const toOrder = () => {
+  cartStore.changeCartList()
+}
 </script>
 
 <template>
@@ -120,10 +127,7 @@ const orderStore = useOrderStore()
           </span>
         </div>
         <div class="total">
-          <el-button
-            size="large"
-            type="primary"
-            @click="orderStore.getOrderInfo"
+          <el-button size="large" type="primary" @click="toOrder"
             >下单结算</el-button
           >
         </div>
