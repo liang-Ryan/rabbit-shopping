@@ -29,6 +29,7 @@ export const useUserStore = defineStore(
       } = await userPostLoginAPI(form)
       userInfo.value = result
       ElMessage.success('登录成功')
+      router.replace(route.query.backUrl || '/')
     }
 
     // =============================

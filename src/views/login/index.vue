@@ -1,8 +1,6 @@
 <script setup>
 // 通用
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/modules/user'
 
 // =============================
@@ -44,15 +42,11 @@ const rules = ref({
 
 const formRef = ref(null)
 const userStore = useUserStore()
-const route = useRoute()
-const router = useRouter()
 
 const login = async () => {
   await formRef.value.validate()
 
   userStore.getUserInfo(form.value)
-
-  router.replace(route.query.backUrl || '/')
 }
 </script>
 
