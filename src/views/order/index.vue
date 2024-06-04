@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import { useOrderStore } from '@/stores'
 
 // =============================
@@ -8,9 +9,21 @@ import { useOrderStore } from '@/stores'
 const orderStore = useOrderStore()
 orderStore.getOrderInfo()
 
-const defaultAddress = orderStore.orderInfo.userAddresses.find((item) => {
-  return item.isDefault === 0
-}) // 地址对象
+// =============================
+// 切换地址
+// =============================
+
+const showDialog = ref(false)
+
+const activeAddress = ref({})
+const changeActive = (item) => {
+  activeAddress.value = item
+}
+
+const changeAddress = () => {
+  orderStore.address = activeAddress
+  showDialog.value = false
+}
 </script>
 
 <template>
@@ -22,22 +35,23 @@ const defaultAddress = orderStore.orderInfo.userAddresses.find((item) => {
         <div class="box-body">
           <div class="address">
             <div class="text">
-              <div class="none" v-if="!defaultAddress">
+              <div class="none" v-if="!orderStore.address">
                 您需要先添加收货地址才可提交订单。
               </div>
               <ul v-else>
                 <li>
-                  <span>收<i />货<i />人：</span>{{ defaultAddress.receiver }}
+                  <span>收<i />货<i />人：</span
+                  >{{ orderStore.address.receiver }}
                 </li>
-                <li><span>联系方式：</span>{{ defaultAddress.contact }}</li>
+                <li><span>联系方式：</span>{{ orderStore.address.contact }}</li>
                 <li>
-                  <span>收货地址：</span>{{ defaultAddress.fullLocation }}
-                  {{ defaultAddress.address }}
+                  <span>收货地址：</span>{{ orderStore.address.fullLocation }}
+                  {{ orderStore.address.address }}
                 </li>
               </ul>
             </div>
             <div class="action">
-              <el-button size="large" @click="toggleFlag = true"
+              <el-button size="large" @click="showDialog = true"
                 >切换地址</el-button
               >
               <el-button size="large" @click="addFlag = true"
@@ -132,7 +146,34 @@ const defaultAddress = orderStore.orderInfo.userAddresses.find((item) => {
       </div>
     </div>
   </div>
+
   <!-- 切换地址 -->
+  <el-dialog title="切换收货地址" width="30%" center v-model="showDialog">
+    <div class="addressWrapper">
+      <div
+        class="text item"
+        :class="{ active: item.id === activeAddress.id }"
+        v-for="item in orderStore.orderInfo.userAddresses"
+        :key="item.id"
+        @click="changeActive(item)"
+      >
+        <ul>
+          <li>
+            <span>收<i />货<i />人：</span>{{ item.receiver }}
+          </li>
+          <li><span>联系方式：</span>{{ item.contact }}</li>
+          <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+        </ul>
+      </div>
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button>取消</el-button>
+        <el-button type="primary" @click="changeAddress">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
   <!-- 添加地址 -->
 </template>
 
