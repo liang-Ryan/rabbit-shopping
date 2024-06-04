@@ -2,13 +2,13 @@
 import { ref, computed } from 'vue'
 import { useDetailStore } from '@/stores'
 import { useRoute } from 'vue-router'
+import { useCartStore } from '@/stores/modules/cart'
 
 // 组件
 import hotGoods from './components/hotGoods.vue'
 import imageView from './components/imageView.vue'
 import XtxSku from './components/XtxSku/index.vue'
 import { ElMessage } from 'element-plus'
-import { useCartStore } from '@/stores/modules/cart'
 
 // =============================
 // computed
@@ -39,8 +39,6 @@ const skuChange = (sku) => {
 
 // 购买数量
 const count = ref(1)
-
-const countChange = (count) => {}
 
 // =============================
 // 加入购物车
@@ -150,7 +148,7 @@ const addToCart = () => {
               <XtxSku :goods="goods" @change="skuChange"></XtxSku>
 
               <!-- 数据组件 -->
-              <el-input-number v-model="count" :min="1" @change="countChange" />
+              <el-input-number v-model="count" :min="1" />
 
               <!-- 按钮组件 -->
               <div>
