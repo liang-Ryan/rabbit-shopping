@@ -1,6 +1,7 @@
 // 通用
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 
 // 组件
@@ -34,11 +35,17 @@ export const useUserStore = defineStore(
     // 退出登录
     // =============================
 
+    const route = useRoute()
     const router = useRouter()
 
     const logout = () => {
       userInfo.value = {}
-      router.push('/login')
+      router.push({
+        path: '/login',
+        query: {
+          backUrl: route.fullPath
+        }
+      })
       ElMessage.success('退出成功')
     }
     // =============================

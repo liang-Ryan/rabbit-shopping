@@ -51,6 +51,7 @@ const login = async () => {
   await formRef.value.validate()
 
   userStore.getUserInfo(form.value)
+
   router.replace(route.query.backUrl || '/')
 }
 </script>

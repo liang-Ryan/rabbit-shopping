@@ -1,10 +1,26 @@
+// 通用
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-// import { cartPostAddCartAPI } from '@/api/cart'
+import { useUserStore } from './user'
+
+// API
+import {
+  cartDeleteCartAPI,
+  cartGetCartListAPI,
+  cartPostAddCartAPI
+} from '@/api/cart'
+import { ElMessage } from 'element-plus'
 
 export const useCartStore = defineStore(
   'cartStore',
   () => {
+    // =============================
+    // 登录判断
+    // =============================
+
+    const userSotre = useUserStore()
+    const isLogin = computed(() => userSotre.userInfo.token)
+
     // =============================
     // 购物车数据
     // =============================
@@ -64,36 +80,55 @@ export const useCartStore = defineStore(
     }
 
     // =============================
+    // 获取购物车列表
+    // =============================
+
+    const getCartList = async () => {
+      const {
+        data: { result }
+      } = await cartGetCartListAPI()
+      cartList.value = result
+    }
+
+    // =============================
     // 添加到购物车
     // =============================
 
     const addCart = async (goods) => {
-      const item = cartList.value.find((item) => {
-        return item.skuId === goods.skuId
-      })
-
-      // 本地购物车
-      if (item) {
-        item.count++
+      if (isLogin.value) {
+        // 线上购物车
+        await cartPostAddCartAPI(goods.skuId, goods.count)
+        getCartList()
       } else {
-        cartList.value.push(goods)
+        // 本地购物车
+        const item = cartList.value.find((item) => {
+          return item.skuId === goods.skuId
+        })
+
+        if (item) {
+          item.count += goods.count
+        } else {
+          cartList.value.push(goods)
+        }
       }
-      // const {
-      //   data: { result }
-      // } = await cartPostAddCartAPI(skuId, count)
     }
 
     // =============================
     // 从购物车删除
     // =============================
 
-    const delCart = (skuId) => {
-      const index = cartList.value.findIndex((item) => skuId === item.skuId)
-
-      if (toString(index)) {
+    const delCart = async (skuId) => {
+      if (isLogin.value) {
+        await cartDeleteCartAPI([skuId])
+        getCartList()
+      } else {
         // 本地购物车
-        cartList.value.splice(index, 1)
+        const index = cartList.value.findIndex((item) => skuId === item.skuId)
+        if (toString(index)) {
+          cartList.value.splice(index, 1)
+        }
       }
+      ElMessage.success('删除成功')
     }
 
     // =============================

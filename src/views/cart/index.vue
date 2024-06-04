@@ -1,6 +1,5 @@
 <script setup>
 // 通用
-import { ref, computed, watch } from 'vue'
 import { useCartStore } from '@/stores/modules/cart'
 
 // =============================
@@ -32,8 +31,8 @@ const cartStore = useCartStore()
             </tr>
           </thead>
 
-          <!-- 商品列表 -->
           <tbody>
+            <!-- 商品列表 -->
             <tr v-for="item in cartStore.cartList" :key="item.id">
               <!-- 单选框 -->
               <td>
@@ -86,6 +85,8 @@ const cartStore = useCartStore()
                 </p>
               </td>
             </tr>
+
+            <!-- 空购物车 -->
             <tr v-if="cartStore.cartList.length === 0">
               <td colspan="6">
                 <div class="cart-none">
@@ -100,7 +101,8 @@ const cartStore = useCartStore()
           </tbody>
         </table>
       </div>
-      <!-- 操作栏 -->
+
+      <!-- 商品结算 -->
       <div class="action">
         <div class="batch">
           共 {{ cartStore.cartGoodsTotalCount }} 件商品，已选择

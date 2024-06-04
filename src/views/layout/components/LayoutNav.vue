@@ -17,7 +17,7 @@ const toLogin = () => {
   router.push({
     path: '/login',
     query: {
-      backUrl: route.fullPath // 传递参数
+      backUrl: route.fullPath
     }
   })
 }
