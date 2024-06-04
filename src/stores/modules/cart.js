@@ -167,6 +167,8 @@ export const useCartStore = defineStore(
       // 全选
       isAllSelected,
       changeAllSelected,
+      // 获取购物车列表
+      getCartList,
       // 添加到购物车
       addCart,
       // 从购物车删除

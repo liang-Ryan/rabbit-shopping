@@ -1,5 +1,6 @@
 <script setup>
 // 通用
+import { useOrderStore } from '@/stores'
 import { useCartStore } from '@/stores/modules/cart'
 
 // =============================
@@ -7,6 +8,12 @@ import { useCartStore } from '@/stores/modules/cart'
 // =============================
 
 const cartStore = useCartStore()
+
+// =============================
+// 提交订单
+// =============================
+
+const orderStore = useOrderStore()
 </script>
 
 <template>
@@ -113,7 +120,10 @@ const cartStore = useCartStore()
           </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" @click="$router.push('/order')"
+          <el-button
+            size="large"
+            type="primary"
+            @click="orderStore.getOrderInfo"
             >下单结算</el-button
           >
         </div>

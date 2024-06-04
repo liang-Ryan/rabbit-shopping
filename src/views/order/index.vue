@@ -7,7 +7,7 @@ import { useOrderStore } from '@/stores'
 // =============================
 
 const orderStore = useOrderStore()
-orderStore.getOrderInfo()
+// orderStore.getOrderInfo()
 
 // =============================
 // 切换地址
@@ -141,7 +141,12 @@ const changeAddress = () => {
 
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button
+            type="primary"
+            size="large"
+            @click="orderStore.submitOrder()"
+            >提交订单</el-button
+          >
         </div>
       </div>
     </div>

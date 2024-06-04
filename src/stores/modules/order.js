@@ -1,8 +1,16 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { orderGetOrderInfoAPI } from '@/api/order'
+import { useRouter } from 'vue-router'
+
+// store
+import { useCartStore } from './cart'
+
+// API
+import { orderGetOrderInfoAPI, orderPostOrderAPI } from '@/api/order'
 
 export const useOrderStore = defineStore('orderStore', () => {
+  const router = useRouter()
+
   // =============================
   // 订单信息
   // =============================
@@ -18,6 +26,36 @@ export const useOrderStore = defineStore('orderStore', () => {
     address.value = orderInfo.value.userAddresses.find((item) => {
       return item.isDefault === 0
     })
+    router.push('/order')
+  }
+
+  // =============================
+  // 提交订单
+  // =============================
+
+  const cartStore = useCartStore()
+
+  const submitOrder = async () => {
+    const {
+      data: { result }
+    } = await orderPostOrderAPI(
+      orderInfo.value.goods.map((item) => {
+        return {
+          skuId: item.skuId,
+          count: item.count
+        }
+      }),
+      address.value.id
+    )
+
+    cartStore.getCartList()
+
+    router.push({
+      path: '/pay',
+      query: {
+        id: result.id
+      }
+    })
   }
 
   // =============================
@@ -26,6 +64,8 @@ export const useOrderStore = defineStore('orderStore', () => {
     // 订单信息
     orderInfo,
     address,
-    getOrderInfo
+    getOrderInfo,
+    // 提交订单
+    submitOrder
   }
 })
