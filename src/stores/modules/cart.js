@@ -1,15 +1,20 @@
 // 通用
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+
+// store
 import { useUserStore } from './user'
+
+// 组件
+import { ElMessage } from 'element-plus'
 
 // API
 import {
   cartDeleteCartAPI,
   cartGetCartListAPI,
-  cartPostAddCartAPI
+  cartPostAddCartAPI,
+  cartPostMergeAPI
 } from '@/api/cart'
-import { ElMessage } from 'element-plus'
 
 export const useCartStore = defineStore(
   'cartStore',
@@ -132,6 +137,23 @@ export const useCartStore = defineStore(
     }
 
     // =============================
+    // 合并购物车
+    // =============================
+
+    const mergeCartList = async () => {
+      await cartPostMergeAPI(
+        cartList.value.map((item) => {
+          return {
+            skuId: item.skuId,
+            selected: item.selected,
+            count: item.count
+          }
+        })
+      )
+      getCartList()
+    }
+
+    // =============================
 
     return {
       // 购物车数据
@@ -148,7 +170,9 @@ export const useCartStore = defineStore(
       // 添加到购物车
       addCart,
       // 从购物车删除
-      delCart
+      delCart,
+      // 合并购物车
+      mergeCartList
     }
   },
   {

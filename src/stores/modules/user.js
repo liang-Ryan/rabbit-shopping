@@ -4,6 +4,9 @@ import { defineStore } from 'pinia'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 
+// store
+import { useCartStore } from './cart'
+
 // 组件
 import { ElMessage } from 'element-plus'
 
@@ -19,6 +22,8 @@ export const useUserStore = defineStore(
 
     const userInfo = ref({})
 
+    const cartStore = useCartStore()
+
     // =============================
     // 登录请求
     // =============================
@@ -28,6 +33,7 @@ export const useUserStore = defineStore(
         data: { result }
       } = await userPostLoginAPI(form)
       userInfo.value = result
+      cartStore.mergeCartList()
       ElMessage.success('登录成功')
       router.replace(route.query.backUrl || '/')
     }
@@ -41,6 +47,8 @@ export const useUserStore = defineStore(
 
     const logout = () => {
       userInfo.value = {}
+      cartStore.cartList = []
+
       router.push({
         path: '/login',
         query: {

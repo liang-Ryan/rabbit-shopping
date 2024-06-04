@@ -21,3 +21,8 @@ export const cartDeleteCartAPI = (array) => {
     }
   })
 }
+
+// 合并购物车
+export const cartPostMergeAPI = (array) => {
+  return request.post('/member/cart/merge', array)
+}
