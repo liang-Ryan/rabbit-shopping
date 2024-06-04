@@ -1,8 +1,6 @@
 <script setup>
 // 通用
-// import { useOrderStore } from '@/stores'
 import { useCartStore } from '@/stores/modules/cart'
-// import { useRouter } from 'vue-router'
 
 // =============================
 // 购物车列表
@@ -14,9 +12,6 @@ cartStore.getCartList()
 // =============================
 // 提交订单
 // =============================
-
-// const orderStore = useOrderStore()
-// const router = useRouter()
 
 const toOrder = () => {
   cartStore.changeCartList()

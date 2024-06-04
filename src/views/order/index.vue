@@ -7,7 +7,6 @@ import { useOrderStore } from '@/stores'
 // =============================
 
 const orderStore = useOrderStore()
-// orderStore.getOrderInfo()
 
 // =============================
 // 切换地址
