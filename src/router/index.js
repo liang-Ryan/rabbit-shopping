@@ -35,6 +35,10 @@ const router = createRouter({
         {
           path: '/pay',
           component: () => import('@/views/pay/index.vue')
+        },
+        {
+          path: '/paycallback',
+          component: () => import('@/views/pay/payResult.vue')
         }
       ]
     }

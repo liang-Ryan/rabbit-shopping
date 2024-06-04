@@ -1,5 +1,27 @@
 <script setup>
-const payInfo = {}
+import { onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { usePayStore } from '@/stores/modules/pay'
+
+// =============================
+// 获取订单信息
+// =============================
+
+const route = useRoute()
+
+const payStore = usePayStore()
+payStore.getPayInfo(route.query.id)
+
+// =============================
+// 支付倒计时
+// =============================
+
+payStore.countDown()
+onUnmounted(() => {
+  if (payStore.interval) {
+    clearInterval(payStore.interval)
+  }
+})
 </script>
 
 <template>
@@ -10,11 +32,14 @@ const payInfo = {}
         <span class="icon iconfont icon-queren2"></span>
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
-          <p>支付还剩 <span>24分30秒</span>, 超时后将取消订单</p>
+          <p>
+            支付还剩 <span>{{ payStore.formatTime }}</span
+            >, 超时后将取消订单
+          </p>
         </div>
         <div class="amount">
           <span>应付总额：</span>
-          <span>¥{{ payInfo.payMoney?.toFixed(2) }}</span>
+          <span>¥{{ payStore.payInfo.payMoney?.toFixed(2) }}</span>
         </div>
       </div>
       <!-- 付款方式 -->
@@ -22,16 +47,7 @@ const payInfo = {}
         <p class="head">选择以下支付方式付款</p>
         <div class="item">
           <p>支付平台</p>
-          <a class="btn wx" href="javascript:;"></a>
-          <a class="btn alipay" :href="payUrl"></a>
-        </div>
-        <div class="item">
-          <p>支付方式</p>
-          <a class="btn" href="javascript:;">招商银行</a>
-          <a class="btn" href="javascript:;">工商银行</a>
-          <a class="btn" href="javascript:;">建设银行</a>
-          <a class="btn" href="javascript:;">农业银行</a>
-          <a class="btn" href="javascript:;">交通银行</a>
+          <a class="btn alipay" :href="payStore.payUrl"></a>
         </div>
       </div>
     </div>

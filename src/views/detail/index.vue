@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useDetailStore } from '@/stores'
 import { useRoute } from 'vue-router'
 import { useCartStore } from '@/stores/modules/cart'
@@ -26,6 +26,13 @@ const goods = computed(() => {
 const route = useRoute()
 
 detailStore.getGoodsDetail(route.params.id)
+
+watch(
+  () => route.path,
+  () => {
+    detailStore.getGoodsDetail(route.path.match(/\d+$/)[0])
+  }
+)
 
 // =============================
 // 购买信息
