@@ -73,9 +73,13 @@ export const useCartStore = defineStore(
     // =============================
 
     const isAllSelected = computed(() => {
-      return cartList.value.every((item) => {
-        return item.selected === true
-      })
+      if (cartList.value.length === 0) {
+        return false
+      } else {
+        return cartList.value.every((item) => {
+          return item.selected === true
+        })
+      }
     })
 
     const changeAllSelected = (value) => {
