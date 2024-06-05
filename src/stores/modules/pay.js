@@ -1,9 +1,6 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRoute } from 'vue-router'
-
-// 组件
-import dayjs from 'dayjs'
 
 // API
 import { payGetInfo } from '@/api/pay'
@@ -38,32 +35,12 @@ export const usePayStore = defineStore('payStore', () => {
   // 支付宝沙箱支付密码：111111
 
   // =============================
-  // 支付倒计时
-  // =============================
-
-  const formatTime = computed(() => {
-    return dayjs.unix(payInfo.value.countdown).format('mm分ss秒')
-  })
-
-  // 倒计时函数
-  let interval = null
-  const countDown = () => {
-    interval = setInterval(() => {
-      payInfo.value.countdown--
-    }, 1000)
-  }
-
-  // =============================
 
   return {
     // 获取订单信息
     payInfo,
     getPayInfo,
     // 支付地址
-    payUrl,
-    // 支付倒计时
-    formatTime,
-    interval,
-    countDown
+    payUrl
   }
 })

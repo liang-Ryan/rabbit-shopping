@@ -11,7 +11,7 @@ import { useCartStore } from './cart'
 import { ElMessage } from 'element-plus'
 
 // API
-import { userPostLoginAPI } from '@/api/user'
+import { userGerOrderAPI, userGetLikeAPI, userPostLoginAPI } from '@/api/user'
 
 export const useUserStore = defineStore(
   'userStore',
@@ -57,14 +57,54 @@ export const useUserStore = defineStore(
       })
       ElMessage.success('退出成功')
     }
+
     // =============================
+    // 猜你喜欢
+    // =============================
+
+    const likeList = ref([])
+    const getLikeList = async () => {
+      const {
+        data: { result }
+      } = await userGetLikeAPI()
+      likeList.value = result
+    }
+
+    // =============================
+    // 个人订单
+    // =============================
+
+    const orderList = ref([])
+
+    const params = ref({
+      orderState: 0,
+      page: 1,
+      pageSize: 2
+    })
+
+    const getOrderList = async () => {
+      const {
+        data: { result }
+      } = await userGerOrderAPI(params.value)
+      orderList.value = result
+    }
+
+    // =============================
+
     return {
       // 登录数据
       userInfo,
       // 登录请求
       getUserInfo,
       // 退出登录
-      logout
+      logout,
+      // 猜你喜欢
+      likeList,
+      getLikeList,
+      // 个人订单
+      orderList,
+      params,
+      getOrderList
     }
   },
   {

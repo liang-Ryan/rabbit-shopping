@@ -7,3 +7,19 @@ export const userPostLoginAPI = ({ account, password }) => {
     password
   })
 }
+
+// 猜你喜欢
+export const userGetLikeAPI = (limit = 4) => {
+  return request.get('/goods/relevant', {
+    params: {
+      limit
+    }
+  })
+}
+
+// 个人订单
+export const userGerOrderAPI = (params) => {
+  return request.get('/member/order', {
+    params
+  })
+}

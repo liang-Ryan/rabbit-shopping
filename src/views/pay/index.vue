@@ -1,7 +1,9 @@
 <script setup>
-import { onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePayStore } from '@/stores/modules/pay'
+
+// 插件
+import { useCountDown } from '@/composables/countDown'
 
 // =============================
 // 获取订单信息
@@ -16,12 +18,8 @@ payStore.getPayInfo(route.query.id)
 // 支付倒计时
 // =============================
 
-payStore.countDown()
-onUnmounted(() => {
-  if (payStore.interval) {
-    clearInterval(payStore.interval)
-  }
-})
+const { formatTime, countDown } = useCountDown()
+countDown()
 </script>
 
 <template>
@@ -33,7 +31,7 @@ onUnmounted(() => {
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
           <p>
-            支付还剩 <span>{{ payStore.formatTime }}</span
+            支付还剩 <span>{{ formatTime }}</span
             >, 超时后将取消订单
           </p>
         </div>
