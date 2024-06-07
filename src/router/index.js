@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { useUserStore } from '@/stores'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -62,6 +63,28 @@ const router = createRouter({
     return {
       top: 0
     }
+  }
+})
+
+// 全局前置守卫
+const urlArr = ['/pay', '/paycallback', '/order'] // 需要登录验证的网址
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  if (urlArr.includes(to.path)) {
+    if (userStore.userInfo.token) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else if (to.path === '/login') {
+    if (userStore.userInfo.token) {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    next()
   }
 })
 
