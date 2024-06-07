@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useDetailStore } from '@/stores'
-import { useRoute } from 'vue-router'
 import { useCartStore } from '@/stores/modules/cart'
+import { useRoute } from 'vue-router'
 
 // 组件
 import hotGoods from './components/hotGoods.vue'
 import imageView from './components/imageView.vue'
-import XtxSku from './components/XtxSku/index.vue'
+import sku from './components/sku.vue'
 import { ElMessage } from 'element-plus'
 
 // =============================
@@ -35,34 +35,24 @@ watch(
 )
 
 // =============================
-// 购买信息
-// =============================
-
-// 选择sku
-let skuSelected = {}
-const skuChange = (sku) => {
-  skuSelected = sku
-}
-
-// 购买数量
-const count = ref(1)
-
-// =============================
 // 加入购物车
 // =============================
 
 const cartStore = useCartStore()
 
+// 购买数量
+const count = ref(1)
+
 const addToCart = () => {
-  if (skuSelected.skuId) {
+  if (detailStore.skuSelected.skuId) {
     cartStore.addCart({
       id: goods.value.id,
       name: goods.value.name,
       picture: goods.value.mainPictures[0],
       price: goods.value.price,
       count: count.value,
-      skuId: skuSelected.skuId,
-      attrsText: skuSelected.specsText,
+      skuId: detailStore.skuSelected.skuId,
+      attrsText: detailStore.skuSelected.specsText,
       selected: true
     })
     ElMessage.success('成功添加到购物车')
@@ -151,8 +141,9 @@ const addToCart = () => {
                   </dd>
                 </dl>
               </div>
+
               <!-- sku -->
-              <XtxSku :goods="goods" @change="skuChange"></XtxSku>
+              <sku></sku>
 
               <!-- 数据组件 -->
               <el-input-number v-model="count" :min="1" />

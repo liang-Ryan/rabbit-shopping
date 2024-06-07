@@ -83,7 +83,11 @@ const switchPage = (page) => {
               <div class="column goods">
                 <ul>
                   <li v-for="item in item.skus" :key="item.id">
-                    <a class="image" href="javascript:;">
+                    <a
+                      class="image"
+                      href="javascript:;"
+                      @click="$router.push(`/detial/${item.id}`)"
+                    >
                       <img :src="item.image" alt="" />
                     </a>
                     <div class="info">
