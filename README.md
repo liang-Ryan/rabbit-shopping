@@ -1,35 +1,28 @@
-# rabbit-shopping
+# 项目介绍
+项目基于vue3，使用vite创建
 
-This template should help get you started developing with Vue 3 in Vite.
+使用pnpm管理，并使用了以下包
+* vite （构建工具）
+* pinia （状态管理）
+* vue-router （路由管理）
+* element-plus （组件库）
+* dayjs （时间格式化工具）
+* VueUse （图片懒加载）
+* axios （网络请求）
+* eslint （代码格式化）
+* prettier （代码格式化）
+* scss （样式）
 
-## Recommended IDE Setup
+### 调试
+指令：pnpm run dev
+账户：13111111111  
+密码：123456
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### 项目难点
+* 处理海量图片的展示与加载，减少图片渲染对首屏性能的影响
+* 实现复杂的商品详情页的功能展示，如图片放大镜、sku选项、同类商品推荐
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
+### 项目亮点
+* 使用VueUse实现图片懒加载，解决商品图片过多导致的加载卡顿问题，降低页面首屏加载时间
+* 使用路由懒加载，对不同页面的代码进行分割和异步加载，减少首次加载时间
+* 实现图片放大镜、sku选项、同类商品推荐等功能，并封装为可复用的组件，提高了开发效率
