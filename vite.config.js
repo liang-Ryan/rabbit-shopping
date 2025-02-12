@@ -25,7 +25,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    // element-plua 自动导入
+    // element-plus 自动导入
     AutoImport({
       resolvers: [ElementPlusResolver()]
     }),
